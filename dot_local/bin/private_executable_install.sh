@@ -21,7 +21,7 @@ else
   USERDIR="/home/$USER"
 fi
 
-git clone https://github.com/solsystemlabs/kickstart.nvim.git "${USERDIR/.config}"/nvim
+git clone https://github.com/solsystemlabs/kickstart.nvim.git "${XDG_CONFIG_HOME:-$USERDIR/.config}"/nvim
 
 if [[ $(dpkg -l | grep fuse3) ]]; then
   printf "\nfuse installed, installing nvim.appimage\n\n"
