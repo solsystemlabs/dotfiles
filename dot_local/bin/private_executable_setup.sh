@@ -1,7 +1,4 @@
 #!/bin/bash
-printf "\ninstalling nvim kickstart\n\n"
-
-git clone https://github.com/solsystemlabs/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 
 if [[ $(dpkg -l | grep fuse3) ]]; then
   printf "\nfuse installed, installing nvim.appimage\n\n"
