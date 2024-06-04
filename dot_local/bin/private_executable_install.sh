@@ -44,7 +44,9 @@ else
 
       mv squashfs-root /
 
-      mkdir /usr/bin/nvim 
+      mkdir /usr/bin/nvim
+      chown -R $USER /usr/bin/nvim
+      chown -R $USER /squashfs-root 
       ln -s /squashfs-root/AppRun /usr/bin/nvim
 
       rm -rf nvim.appimage
