@@ -105,5 +105,5 @@ path+=($HOME/bin)
 path+=($HOME/.local/bin)
 export PATH
 
-alias nvim="nvim.appimage"
+alias nvim="$HOME/nvim.appimage"
 alias c="chezmoi"
