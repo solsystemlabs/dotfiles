@@ -100,10 +100,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-path+=(/usr/share/nvim)
+typeset -aU path
+path+=(/opt/nvim)
 path+=($HOME/bin)
 path+=($HOME/.local/bin)
 export PATH
 
-alias nvim="$HOME/nvim.appimage"
+#alias nvim="$HOME/nvim.appimage"
 alias c="chezmoi"
