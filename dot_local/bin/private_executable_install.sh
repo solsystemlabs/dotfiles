@@ -1,21 +1,5 @@
 #!/bin/bash
-
-#read -s -p "Enter password for sudo: " sudoPW
-
-#printf "installing necessary packages\n\n"
-
-#apt update && apt upgrade -y
-#apt install vim git tmux zsh ripgrep make unzip gcc xclip curl -y
-
 printf "\ninstalling nvim kickstart\n\n"
-
-#USER=$(who am i | awk '{print $1}')
-
-#if [ $USER == "root" ]; then
-#  USERDIR="/root"
-#else
-#  USERDIR="/home/$USER"
-#fi
 
 git clone https://github.com/solsystemlabs/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 
@@ -25,11 +9,6 @@ if [[ $(dpkg -l | grep fuse3) ]]; then
   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
   chmod u+x nvim.appimage
   mv nvim.appimage ~/.local/bin/nvim
-
-#  mkdir -p /opt/nvim
-#  mv nvim.appimage /opt/nvim/nvim
-#  chown -R $USER:$USER /opt/nvim
-  #mv nvim.appimage "${XDG_CONFIG_HOME:-$USERDIR/.local/bin}"
 
   printf "\nnvim appimage installed\n\n"
 else
@@ -45,16 +24,6 @@ else
 
       mv squashfs-root ~/.local/bin/
       ln -s ~/.local/bin/squashfs-root/AppRun ~/.local/bin/nvim
-
- #     sudo -u $USER mv squashfs-root /
-
-  #    sudo -u $USER mkdir /usr/bin/nvim
-      #chown -R $USER:$USER /squashfs-root 
-   #   sudo -u $USER ln -s /squashfs-root/AppRun /usr/bin/nvim
-      #chown -R $USER:$USER /usr/bin/nvim
-      
-    #  rm -rf nvim.appimage
-     # rm -rf squashfs-root
 
       printf "\nextracted nvim appimage installed"
     fi
