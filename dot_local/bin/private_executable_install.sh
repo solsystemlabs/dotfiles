@@ -4,10 +4,6 @@
 
 printf "installing necessary packages\n\n"
 
-#echo $sudoPW | sudo -S apt update 
-#echo $sudoPW | sudo -S apt upgrade -y
-#echo $sudoPW | sudo -S apt install vim git tmux zsh ripgrep make unzip gcc xclip curl -y
-
 apt update && apt upgrade -y
 apt install vim git tmux zsh ripgrep make unzip gcc xclip curl -y
 
@@ -29,15 +25,14 @@ if [[ $(dpkg -l | grep fuse3) ]]; then
   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
   chmod u+x nvim.appimage
   
- # echo $sudoPW | sudo -S mv nvim.appimage /opt/nvim/nvim
-   mv nvim.appimage /opt/nvim/nvim
-   mkdir -p /opt/nvim
- # echo $sudoPW | sudo -S mkdir -p /opt/nvim
+  mkdir -p /opt/nvim
+  mv nvim.appimage /opt/nvim/nvim
+  chown -R $USER /opt/nvim
+  #mv nvim.appimage "${XDG_CONFIG_HOME:-$USERDIR/.local/bin}"
 
   printf "\nnvim appimage installed\n\n"
 else
   printf "\nfuse not installed, installing extracted nvim.appimage\n\n"
-
 
   if [ ! -d "/usr/bin/nvim" ]; then
     if [ ! -L "/usr/bin/nvim" ]; then
@@ -47,13 +42,13 @@ else
       ./nvim.appimage --appimage-extract
       ./squashfs-root/AppRun --version
 
-  #    echo $sudoPW | sudo -S mv squashfs-root /
+      mv squashfs-root /
 
-  #    echo $sudoPW | sudo -S mkdir /usr/bin/nvim 
-  #    echo $sudoPW | sudo -S ln -s /squashfs-root/AppRun /usr/bin/nvim
+      mkdir /usr/bin/nvim 
+      ln -s /squashfs-root/AppRun /usr/bin/nvim
 
-  #    echo $sudoPW | sudo -S rm -rf nvim.appimage
-  #    echo $sudoPW | sudo -S rm -rf squashfs-root
+      rm -rf nvim.appimage
+      rm -rf squashfs-root
 
       printf "\nextracted nvim appimage installed"
     fi

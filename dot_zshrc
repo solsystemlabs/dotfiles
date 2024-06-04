@@ -109,11 +109,10 @@ source $ZSH/oh-my-zsh.sh
 
 typeset -aU path
 path+=(/opt/nvim)
-path+=($HOME/bin)
-path+=($HOME/.local/bin)
+path+=($HOME/.local/bin/)
 export PATH
 
-#alias nvim="$HOME/nvim.appimage"
+#alias nvim="$HOME/.local/bin/nvim.appimage"
 alias c="chezmoi"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
