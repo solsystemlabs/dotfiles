@@ -101,8 +101,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 path+=(/usr/share/nvim)
-path+=($PWD/bin)
-path+=($PWD/.local/bin)
+path+=($HOME/bin)
+path+=($HOME/.local/bin)
 export PATH
 
 alias nvim="nvim.appimage"
