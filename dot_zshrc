@@ -99,8 +99,11 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export PATH="/usr/share/nvim/:$PATH"
-export PATH="$PATH:/home/admin/.local/bin"
-export PATH="$PATH:/home/admin/bin"
+
+path+=(/usr/share/nvim)
+path+=($PWD/bin)
+path+=($PWD/.local/bin)
+export PATH
+
 alias nvim="nvim.appimage"
 alias c="chezmoi"
