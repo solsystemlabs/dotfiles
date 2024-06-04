@@ -108,7 +108,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 typeset -aU path
-path+=(/opt/nvim)
+#path+=(/opt/nvim)
 path+=($HOME/.local/bin/)
 export PATH
 
