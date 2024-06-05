@@ -22,6 +22,8 @@ if [ ! -d "~/.local/bin/squashfs-root" ]; then
     mv squashfs-root ~/.local/bin/
     ln -s ~/.local/bin/squashfs-root/AppRun ~/.local/bin/nvim
 
+    rm ~/nvim.appimage
+
     printf "\n Neovim installed!!"
   fi
   printf "\nNeovim already installed\n\n"
