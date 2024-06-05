@@ -25,7 +25,8 @@ if [ ! -d "~/.local/bin/squashfs-root" ]; then
     rm ~/nvim.appimage
 
     printf "\n Neovim installed!!"
+  else
+    printf "\nNeovim already installed\n\n"
   fi
-  printf "\nNeovim already installed\n\n"
 fi
 # fi
