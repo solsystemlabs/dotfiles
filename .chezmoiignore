@@ -1,0 +1,16 @@
+# On Windows machines, ignore Unix paths
+{{ if eq .chezmoi.os "windows" }}
+dot_zshrc
+dot_tmux.conf
+dot_gitconfig.tmpl
+dot_gitconfig-work.tmpl
+dot_p10k.zsh
+dot_config/private_fish/**
+dot_config/zellij/**
+dot_config/nvim/**
+dot_local/**
+dot_config/alacritty/**
+{{ else }}
+# On Unix machines, ignore Windows paths
+AppData/**
+{{ end }}

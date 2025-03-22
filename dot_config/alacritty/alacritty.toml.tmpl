@@ -1,0 +1,16 @@
+{{- if eq .chezmoi.os "windows" -}}
+# Windows-specific Alacritty config
+general.import = [
+  "{{ .chezmoi.homeDir }}\\AppData\\Roaming\\alacritty\\fonts.toml",
+  "{{ .chezmoi.homeDir }}\\AppData\\Roaming\\alacritty\\themes\\onedark_deep.toml"
+]
+{{- else -}}
+# Unix-specific Alacritty config
+general.import = [
+  "~/.config/alacritty/fonts.toml",
+  "~/.config/alacritty/themes/onedark_deep.toml"
+]
+{{- end }}
+
+[window]
+option_as_alt = "Both"
