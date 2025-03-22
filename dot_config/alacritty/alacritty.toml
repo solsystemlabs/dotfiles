@@ -1,0 +1,7 @@
+general.import = [
+  "~/.config/alacritty/fonts.toml",
+  "~/.config/alacritty/themes/onedark_deep.toml"
+]
+
+[window]
+option_as_alt = "Both"

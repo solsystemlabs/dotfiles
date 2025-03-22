@@ -1,8 +1,17 @@
-function go -d "Quick directory navigation function"
+function go --description 'Quick directory navigation'
     switch $argv[1]
-        case "bm"
-            cd ~/memory-builder
+        case "in" or "infra"
+            cd ~/PycharmProjects/infra-frontend
         case "home"
             cd ~
+        case "d"
+            cd ~/Desktop
+        case "fish"
+            cd ~/.config/fish/
+        case "nvim"
+            cd ~/.config/nvim/
+        case '*'
+            echo "Unknown destination: $argv[1]"
+            return 1
     end
 end

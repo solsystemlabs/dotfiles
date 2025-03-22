@@ -1,0 +1,59 @@
+# OneDark Deep Theme for Alacritty
+# Based on https://github.com/navarasu/onedark.nvim (deep variant)
+
+# Default colors
+[colors.primary]
+background = "#1a212e"  # bg0
+foreground = "#93a4c3"  # fg
+    
+# Cursor colors
+[colors.cursor]
+text = "#1a212e"        # bg0
+cursor = "#93a4c3"      # fg
+    
+# Selection colors
+[colors.selection]
+text = "CellForeground"
+background = "#283347"  # bg2
+    
+# Normal colors
+[colors.normal]
+black = "#0c0e15"     # black
+red = "#f65866"       # red
+green = "#8bcd5b"     # green
+yellow = "#efbd5d"    # yellow
+blue = "#41a7fc"      # blue
+magenta = "#c75ae8"   # purple
+cyan = "#34bfd0"      # cyan
+white = "#93a4c3"     # fg
+    
+# Bright colors (lighter versions)
+[colors.bright]
+black = "#455574"     # grey
+red = "#f65866"       # red (same as normal for consistency)
+green = "#8bcd5b"     # green (same as normal for consistency)
+yellow = "#efbd5d"    # yellow (same as normal for consistency)
+blue = "#54b0fd"      # bg_blue (slightly lighter)
+magenta = "#c75ae8"   # purple (same as normal for consistency)
+cyan = "#34bfd0"      # cyan (same as normal for consistency)
+white = "#6c7d9c"     # light_grey
+    
+# Dim colors (darker versions)
+[colors.dim]
+black = "#0c0e15"     # black (same as normal)
+red = "#992525"       # dark_red
+green = "#27341c"     # diff_add (darker green)
+yellow = "#8f610d"    # dark_yellow
+blue = "#102b40"      # diff_change
+magenta = "#862aa1"   # dark_purple
+cyan = "#1b6a73"      # dark_cyan
+white = "#455574"     # grey (dimmer than normal white)
+
+# Search colors
+[colors.search.matches]
+foreground = "CellBackground"
+background = "#efbd5d"  # yellow for highlighting matches
+
+[colors.search.focused_match]
+foreground = "CellBackground"
+background = "#8bcd5b"  # green for focused match
