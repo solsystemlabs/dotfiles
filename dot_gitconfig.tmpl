@@ -1,0 +1,22 @@
+[user]
+    name = Taylor Eernisse
+{{- if eq .chezmoi.hostname "MacBook-Pro-de-Taylor.local" }}
+    email = teernisse@visiostack.com
+{{- else }}
+    email = me@tayloreernisse.com
+{{- end }}
+
+[core]
+    editor = nvim
+
+{{- if eq .chezmoi.hostname "MacBook-Pro-de-Taylor.local" }}
+[url "git@gitlab.visiostack.com:"]
+    insteadOf = https://gitlab.visiostack.com/
+{{- end }}
+
+[includeIf "gitdir:~/PycharmProjects/infra-frontend/"]
+    path = ~/.gitconfig-work
+
+# Common configurations for all machines
+[pull]
+    rebase = true
