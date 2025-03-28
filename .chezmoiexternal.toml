@@ -28,7 +28,7 @@
     stripComponents = 1
 [".config/nvim"]
     type = "archive"
-    url = "https://github.com/solsystemlabs/kickstart-modular.nvim/archive/master.tar.gz"
+    url = "https://github.com/solsystemlabs/nvim2/archive/master.tar.gz"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
