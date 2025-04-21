@@ -1,0 +1,9 @@
+# Unix-specific Alacritty config
+general.import = [
+  "~/.config/alacritty/fonts.toml",
+  "~/.config/alacritty/themes/onedark_deep.toml"
+  # "~/.config/alacritty/themes/themes/gruvbox_dark.toml"
+]
+
+[window]
+option_as_alt = "Both"

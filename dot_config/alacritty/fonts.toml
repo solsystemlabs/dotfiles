@@ -1,0 +1,20 @@
+# Font configuration for Alacritty
+# Save as ~/.config/alacritty/fonts.toml
+
+[font]
+normal = { family = "JetbrainsMono Nerd Font", style = "Regular" }
+bold = { family = "Jetbrains Mono", style = "Bold" }
+italic = { family = "Jetbrains Mono", style = "Italic" }
+bold_italic = { family = "Jetbrains Mono", style = "Bold Italic" }
+
+# Optional size configuration
+size = 11.0
+  
+# Optional: You can also configure other font-related settings
+# [font.offset]
+# x = 0
+# y = 0
+  
+# [font.glyph_offset]
+# x = 0
+# y = 0
