@@ -1,0 +1,35 @@
+[user]
+name = "Taylor Eernisse"
+email = "teernisse@visiostack.com"
+
+[ui]
+paginate = "never"
+editor = "nvim"
+default-command = "log"
+diff-editor = ":builtin"
+
+[merge-tools.diffconflicts]
+program = "nvim"
+merge-args = [
+  "-c", "let g:jj_diffconflicts_marker_length=$marker_length",
+	"-c", "JJDiffConflicts!", "$output", "$base", "$left", "$right",
+]
+merge-tool-edits-conflict-markers = true
+
+#diff-editor = "diffedit3"
+
+#[merge-tools.diffedit3]
+#program = "/Users/tayloreernisse/diffedit3"
+
+[colors]
+"diff removed token" = { underline = false }
+"diff added token" = { underline = false }
+
+[templates]
+#log = "builtin_log_compact_full_description"
+[revset-aliases]
+"latest_all()" = "latest(all(), 15)"
+
+[aliases]
+log-recent = ["log", "-r", "latest_all()"]
+log15 = ['log', '--limit', '15']
