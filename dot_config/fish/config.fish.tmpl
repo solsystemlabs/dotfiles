@@ -1,0 +1,254 @@
+if status is-interactive
+    # OS-specific PATH additions
+{{- if .platform.is_macos }}
+    # macOS Homebrew paths
+    fish_add_path /opt/homebrew/bin
+    fish_add_path /opt/homebrew/sbin
+    fish_add_path /usr/local/bin
+    fish_add_path /usr/local/sbin
+    
+    # macOS system paths
+    fish_add_path /usr/bin
+    fish_add_path /bin
+    fish_add_path /usr/sbin
+    fish_add_path /sbin
+{{- end }}
+
+{{- if .platform.is_linux }}
+    # Linux Homebrew paths
+    fish_add_path /home/linuxbrew/.linuxbrew/bin
+    fish_add_path /home/linuxbrew/.linuxbrew/sbin
+    
+    # Standard Linux paths
+    fish_add_path /usr/local/bin
+    fish_add_path /usr/bin
+    fish_add_path /bin
+    fish_add_path /usr/local/sbin
+    fish_add_path /usr/sbin
+    fish_add_path /sbin
+    
+    # Snap packages (Ubuntu)
+    fish_add_path /snap/bin
+{{- end }}
+
+{{- if .platform.is_wsl }}
+    # WSL Homebrew paths
+    fish_add_path /home/linuxbrew/.linuxbrew/bin
+    fish_add_path /home/linuxbrew/.linuxbrew/sbin
+    
+    # Standard Linux paths
+    fish_add_path /usr/local/bin
+    fish_add_path /usr/bin
+    fish_add_path /bin
+    fish_add_path /usr/local/sbin
+    fish_add_path /usr/sbin
+    fish_add_path /sbin
+    
+    # WSL Windows integration paths (optional)
+    # fish_add_path /mnt/c/Windows/System32
+    # fish_add_path /mnt/c/Windows
+{{- end }}
+
+    # User-specific paths (all platforms)
+    fish_add_path $HOME/.local/bin
+    fish_add_path $HOME/bin
+    
+    # Cargo/Rust paths
+    fish_add_path $HOME/.cargo/bin
+    
+    # Go paths
+    if test -d $HOME/go/bin
+        fish_add_path $HOME/go/bin
+    end
+    
+    # Node.js paths (if using nvm)
+    if test -d $HOME/.local/share/nvm
+        fish_add_path $HOME/.local/share/nvm/*/bin
+    end
+    
+    # Python user paths
+    if test -d $HOME/.local/share/python/*/bin
+        fish_add_path $HOME/.local/share/python/*/bin
+    end
+    
+{{- if .platform.is_macos }}
+    # macOS-specific tool paths
+    if test -d /opt/homebrew/opt/gnu-sed/libexec/gnubin
+        fish_add_path /opt/homebrew/opt/gnu-sed/libexec/gnubin
+    end
+    if test -d /opt/homebrew/opt/gnu-tar/libexec/gnubin
+        fish_add_path /opt/homebrew/opt/gnu-tar/libexec/gnubin
+    end
+{{- end }}
+
+    # Initialize tools that require it
+    if type -q atuin
+        atuin init fish | source
+    end
+    
+    if type -q zoxide
+        zoxide init fish | source
+    end
+    
+    if type -q starship
+        starship init fish | source
+    end
+    
+    # Environment variables
+    set -gx EDITOR nvim
+    set -gx VISUAL nvim
+    set -gx PAGER less
+    
+{{- if .platform.is_macos }}
+    # macOS-specific environment variables
+    set -gx HOMEBREW_NO_ANALYTICS 1
+    set -gx HOMEBREW_NO_INSECURE_REDIRECT 1
+    set -gx HOMEBREW_CASK_OPTS "--require-sha"
+{{- end }}
+
+    # Development environment variables
+    if type -q go
+        set -gx GOPATH $HOME/go
+    end
+    
+    # Rust environment
+    if test -f $HOME/.cargo/env
+        source $HOME/.cargo/env
+    end
+    
+    # Node.js environment (if using nvm)
+    set -gx NVM_DIR $HOME/.local/share/nvm
+    
+    # Aliases for common commands
+    if type -q eza
+        alias ls='eza --icons'
+        alias ll='eza -la --icons'
+        alias la='eza -a --icons'
+        alias lt='eza -T --icons'
+        alias lg='eza -la --git --icons'
+    else
+        alias ll='ls -la'
+        alias la='ls -A'
+        alias l='ls -CF'
+    end
+    
+    if type -q bat
+        alias cat='bat'
+    end
+    
+    if type -q fd
+        alias find='fd'
+    end
+    
+    if type -q rg
+        alias grep='rg'
+    end
+    
+    if type -q nvim
+        alias vim='nvim'
+        alias vi='nvim'
+    end
+    
+    if type -q btop
+        alias top='btop'
+        alias htop='btop'
+    end
+    
+    # Git aliases
+    if type -q git
+        alias g='git'
+        alias ga='git add'
+        alias gc='git commit'
+        alias gp='git push'
+        alias gl='git pull'
+        alias gs='git status'
+        alias gd='git diff'
+        alias gco='git checkout'
+        alias gb='git branch'
+        alias glog='git log --oneline --graph'
+    end
+    
+    # Jujutsu aliases
+    if type -q jj
+        alias j='jj'
+        alias jl='jj log'
+        alias js='jj status'
+        alias jd='jj diff'
+        alias jn='jj new'
+        alias je='jj edit'
+        alias jb='jj bookmark'
+        alias jco='jj checkout'
+    end
+    
+    # Docker aliases
+    if type -q docker
+        alias d='docker'
+        alias dps='docker ps'
+        alias di='docker images'
+        alias drm='docker rm'
+        alias drmi='docker rmi'
+    end
+    
+{{- if .platform.is_macos }}
+    # Colima aliases (macOS Docker alternative)
+    if type -q colima
+        alias colima-start='colima start'
+        alias colima-stop='colima stop'
+        alias colima-restart='colima restart'
+    end
+{{- end }}
+    
+    if type -q lazygit
+        alias lg='lazygit'
+    end
+    
+    if type -q lazydocker
+        alias ld='lazydocker'
+    end
+    
+    if type -q yazi
+        alias fm='yazi'
+        alias y='yazi'
+    end
+    
+    if type -q zellij
+        alias zj='zellij'
+        alias zl='zellij list-sessions'
+        alias za='zellij attach'
+    end
+    
+    if type -q just
+        alias j='just'
+        alias jl='just --list'
+    end
+    
+    if type -q supabase
+        alias sb='supabase'
+    end
+    
+    # Custom functions
+    function mkcd
+        mkdir -p $argv[1] && cd $argv[1]
+    end
+    
+    function backup
+        cp $argv[1] $argv[1].backup.(date +%Y%m%d_%H%M%S)
+    end
+    
+    # Fuzzy finder setup
+    if type -q fzf
+        if type -q fd
+            set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git'
+            set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+        end
+    end
+    
+    # Pet command snippet manager
+    if type -q pet
+        function pet-select
+            pet search --query (commandline -b) | read -l result
+            and commandline -r $result
+        end
+        bind \cr pet-select
+    end
+end

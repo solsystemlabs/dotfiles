@@ -1,0 +1,69 @@
+# Cross-platform Brewfile
+# This file works on macOS, Linux, and WSL
+
+# Core system tools
+brew "fish"           # Fish shell
+brew "git"            # Version control
+brew "git-delta"      # Better git diff
+brew "gh"             # GitHub CLI
+brew "jj"             # Jujutsu VCS
+brew "jjui"           # Jujutsu TUI
+brew "neovim"         # Modern vim
+brew "openssh"        # SSH client/server
+
+# Terminal and system monitoring
+brew "zellij"         # Terminal multiplexer
+brew "btop"           # System monitor
+
+# File and text tools
+brew "eza"            # Modern ls replacement
+brew "fd"             # Fast find alternative
+brew "fzf"            # Fuzzy finder
+brew "ripgrep"        # Fast grep alternative
+brew "tree-sitter"    # Parser generator
+brew "yazi"           # Terminal file manager
+brew "zoxide"         # Smart cd replacement
+
+# Development tools
+brew "node"           # Node.js
+brew "nvm"            # Node version manager
+brew "just"           # Command runner
+brew "pet"            # Command snippet manager
+
+# Container tools
+{{- if .platform.is_macos }}
+brew "colima"         # Container runtime for macOS
+{{- end }}
+brew "lazydocker"     # Docker TUI
+brew "lazygit"        # Git TUI
+
+# Media and document processing
+brew "ffmpeg"         # Video/audio processing
+brew "imagemagick"    # Image processing
+brew "ghostscript"    # PostScript/PDF processor
+
+# Database and backend tools
+brew "supabase"       # Supabase CLI
+
+{{- if .platform.is_macos }}
+# macOS-specific GUI applications
+cask "wezterm"        # Terminal emulator
+cask "aerospace"      # Tiling window manager
+cask "maccy"          # Clipboard manager
+
+# Nerd Fonts
+cask "font-hack-nerd-font"
+cask "font-source-code-pro"
+cask "font-symbols-only-nerd-font"
+cask "font-noto-color-emoji"
+{{- end }}
+
+{{- if .platform.is_linux }}
+# Linux-specific tools (when using Homebrew on Linux)
+brew "wezterm"        # Terminal emulator (if available)
+{{- end }}
+
+{{- if .platform.is_wsl }}
+# WSL-specific tools
+# GUI applications won't work, focus on CLI tools
+{{- end }}

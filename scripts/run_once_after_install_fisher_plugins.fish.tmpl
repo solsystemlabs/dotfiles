@@ -1,0 +1,32 @@
+#!/usr/bin/env fish
+
+# Fisher plugin installation script
+# This script installs all your current fisher plugins
+
+echo "🐟 Installing Fisher plugins..."
+
+# Install Fisher if not already installed
+if not type -q fisher
+    echo "Installing Fisher plugin manager..."
+    curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+end
+
+# Install all fisher plugins
+set -l plugins \
+    jethrokuan/z \
+    ilancosman/tide@v6 \
+    plttn/fish-eza \
+    jomik/fish-gruvbox \
+    jorgebucaran/nvm.fish \
+    halostatue/fish-chezmoi@v1 \
+    evanlucas/fish-kubectl-completions \
+    otms61/fish-pet
+
+echo "Installing fisher plugins..."
+for plugin in $plugins
+    echo "  Installing $plugin..."
+    fisher install $plugin
+end
+
+echo "✅ Fisher plugins installation complete!"
+echo "🔄 Restart your shell or run 'source ~/.config/fish/config.fish' to reload configuration"
