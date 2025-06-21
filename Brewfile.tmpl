@@ -31,7 +31,7 @@ brew "just"           # Command runner
 brew "pet"            # Command snippet manager
 
 # Container tools
-{{- if .platform.is_macos }}
+{{- if eq .chezmoi.os "darwin" }}
 brew "colima"         # Container runtime for macOS
 {{- end }}
 brew "lazydocker"     # Docker TUI
@@ -45,7 +45,7 @@ brew "ghostscript"    # PostScript/PDF processor
 # Database and backend tools
 brew "supabase"       # Supabase CLI
 
-{{- if .platform.is_macos }}
+{{- if eq .chezmoi.os "darwin" }}
 # macOS-specific GUI applications
 cask "wezterm"        # Terminal emulator
 cask "aerospace"      # Tiling window manager
@@ -58,12 +58,12 @@ cask "font-symbols-only-nerd-font"
 cask "font-noto-color-emoji"
 {{- end }}
 
-{{- if .platform.is_linux }}
+{{- if eq .chezmoi.os "linux" }}
 # Linux-specific tools (when using Homebrew on Linux)
 brew "wezterm"        # Terminal emulator (if available)
 {{- end }}
 
-{{- if .platform.is_wsl }}
+{{- if and (eq .chezmoi.os "linux") (contains "microsoft" (.chezmoi.kernel.osrelease | default "" | lower)) }}
 # WSL-specific tools
 # GUI applications won't work, focus on CLI tools
 {{- end }}

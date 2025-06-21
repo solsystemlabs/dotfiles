@@ -1,6 +1,6 @@
 if status is-interactive
     # OS-specific PATH additions
-{{- if .platform.is_macos }}
+{{- if eq .chezmoi.os "darwin" }}
     # macOS Homebrew paths
     fish_add_path /opt/homebrew/bin
     fish_add_path /opt/homebrew/sbin
@@ -14,7 +14,7 @@ if status is-interactive
     fish_add_path /sbin
 {{- end }}
 
-{{- if .platform.is_linux }}
+{{- if eq .chezmoi.os "linux" }}
     # Linux Homebrew paths
     fish_add_path /home/linuxbrew/.linuxbrew/bin
     fish_add_path /home/linuxbrew/.linuxbrew/sbin
@@ -31,7 +31,7 @@ if status is-interactive
     fish_add_path /snap/bin
 {{- end }}
 
-{{- if .platform.is_wsl }}
+{{- if and (eq .chezmoi.os "linux") (contains "microsoft" (.chezmoi.kernel.osrelease | default "" | lower)) }}
     # WSL Homebrew paths
     fish_add_path /home/linuxbrew/.linuxbrew/bin
     fish_add_path /home/linuxbrew/.linuxbrew/sbin
@@ -63,15 +63,21 @@ if status is-interactive
     
     # Node.js paths (if using nvm)
     if test -d $HOME/.local/share/nvm
-        fish_add_path $HOME/.local/share/nvm/*/bin
+        for nvm_path in $HOME/.local/share/nvm/*/bin
+            if test -d $nvm_path
+                fish_add_path $nvm_path
+            end
+        end
     end
     
     # Python user paths
-    if test -d $HOME/.local/share/python/*/bin
-        fish_add_path $HOME/.local/share/python/*/bin
+    for python_path in $HOME/.local/share/python/*/bin
+        if test -d $python_path
+            fish_add_path $python_path
+        end
     end
     
-{{- if .platform.is_macos }}
+{{- if eq .chezmoi.os "darwin" }}
     # macOS-specific tool paths
     if test -d /opt/homebrew/opt/gnu-sed/libexec/gnubin
         fish_add_path /opt/homebrew/opt/gnu-sed/libexec/gnubin
@@ -99,7 +105,7 @@ if status is-interactive
     set -gx VISUAL nvim
     set -gx PAGER less
     
-{{- if .platform.is_macos }}
+{{- if eq .chezmoi.os "darwin" }}
     # macOS-specific environment variables
     set -gx HOMEBREW_NO_ANALYTICS 1
     set -gx HOMEBREW_NO_INSECURE_REDIRECT 1
@@ -189,7 +195,7 @@ if status is-interactive
         alias drmi='docker rmi'
     end
     
-{{- if .platform.is_macos }}
+{{- if eq .chezmoi.os "darwin" }}
     # Colima aliases (macOS Docker alternative)
     if type -q colima
         alias colima-start='colima start'
