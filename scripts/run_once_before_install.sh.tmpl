@@ -231,7 +231,7 @@ install_system_packages() {
                         ripgrep \
                         fd-find \
                         bat \
-                        exa
+                        eza
                     
                     # Create symlinks for differently named packages
                     if command -v batcat &> /dev/null && ! command -v bat &> /dev/null; then
@@ -262,7 +262,7 @@ install_system_packages() {
                         ripgrep \
                         fd \
                         bat \
-                        exa
+                        eza
                     ;;
             esac
             ;;
@@ -323,6 +323,171 @@ configure_git() {
     fi
 }
 
+# Setup GitHub authentication
+setup_github_auth() {
+    print_status "Setting up GitHub authentication..."
+    
+    # Check if already authenticated
+    if command -v gh &> /dev/null && gh auth status &>/dev/null; then
+        print_success "Already authenticated with GitHub CLI"
+        return 0
+    fi
+    
+    # Check for existing SSH keys
+    local has_ssh_key=false
+    if [[ -f ~/.ssh/id_ed25519 ]] || [[ -f ~/.ssh/id_rsa ]]; then
+        has_ssh_key=true
+        print_status "Existing SSH key found"
+    fi
+    
+    echo
+    echo "Choose GitHub authentication method:"
+    echo "1) GitHub CLI (recommended - easy browser auth)"
+    echo "2) SSH Key (traditional - requires manual setup)"
+    if [[ "$has_ssh_key" == true ]]; then
+        echo "3) Use existing SSH key"
+    fi
+    echo "4) Skip for now"
+    echo
+    
+    read -p "Enter choice (1-4): " auth_choice
+    
+    case "$auth_choice" in
+        1)
+            setup_github_cli
+            ;;
+        2)
+            setup_github_ssh
+            ;;
+        3)
+            if [[ "$has_ssh_key" == true ]]; then
+                setup_existing_ssh_key
+            else
+                print_warning "No existing SSH key found, falling back to GitHub CLI"
+                setup_github_cli
+            fi
+            ;;
+        4)
+            print_warning "Skipping GitHub authentication setup"
+            print_status "You can run this later with: gh auth login"
+            ;;
+        *)
+            print_warning "Invalid choice, skipping GitHub authentication"
+            ;;
+    esac
+}
+
+# Setup GitHub CLI authentication
+setup_github_cli() {
+    if ! command -v gh &> /dev/null; then
+        print_warning "GitHub CLI (gh) not installed yet - will be available after package installation"
+        return 0
+    fi
+    
+    print_status "Setting up GitHub CLI authentication..."
+    print_warning "This will open your browser for authentication"
+    
+    # Authenticate with GitHub CLI
+    if gh auth login --git-protocol ssh --web; then
+        # Set up Git to use GitHub CLI as credential helper
+        gh auth setup-git
+        print_success "GitHub CLI authentication complete!"
+    else
+        print_error "GitHub CLI authentication failed"
+    fi
+}
+
+# Setup SSH key for GitHub
+setup_github_ssh() {
+    print_status "Setting up SSH key for GitHub..."
+    
+    # Get email for SSH key
+    local email
+    if [[ -n "$(git config --global user.email 2>/dev/null)" ]]; then
+        email=$(git config --global user.email)
+        print_status "Using Git email: $email"
+    else
+        read -p "Enter your GitHub email: " email
+    fi
+    
+    # Create .ssh directory if it doesn't exist
+    mkdir -p ~/.ssh
+    chmod 700 ~/.ssh
+    
+    # Generate Ed25519 key
+    print_status "Generating SSH key..."
+    ssh-keygen -t ed25519 -C "$email" -f ~/.ssh/id_ed25519 -N ""
+    
+    # Start SSH agent and add key
+    if [[ -z "$SSH_AUTH_SOCK" ]]; then
+        eval "$(ssh-agent -s)"
+    fi
+    ssh-add ~/.ssh/id_ed25519
+    
+    # Create SSH config for GitHub
+    if [[ ! -f ~/.ssh/config ]]; then
+        print_status "Creating SSH config..."
+        cat > ~/.ssh/config << 'EOF'
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+EOF
+        chmod 600 ~/.ssh/config
+    fi
+    
+    # Display instructions
+    print_success "SSH key generated! Add this public key to GitHub:"
+    echo "----------------------------------------"
+    cat ~/.ssh/id_ed25519.pub
+    echo "----------------------------------------"
+    echo
+    echo "1. Go to: https://github.com/settings/ssh/new"
+    echo "2. Paste the key above"
+    echo "3. Give it a title (e.g., '$(hostname) - $(date +%Y-%m-%d)')"
+    echo "4. Click 'Add SSH key'"
+    echo
+    
+    # Copy to clipboard if available
+    if command -v pbcopy &> /dev/null; then
+        cat ~/.ssh/id_ed25519.pub | pbcopy
+        print_success "Public key copied to clipboard!"
+    elif command -v xclip &> /dev/null; then
+        cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
+        print_success "Public key copied to clipboard!"
+    fi
+    
+    print_warning "After adding the key to GitHub, test with: ssh -T git@github.com"
+}
+
+# Setup existing SSH key
+setup_existing_ssh_key() {
+    print_status "Setting up existing SSH key..."
+    
+    # Start SSH agent and add key
+    if [[ -z "$SSH_AUTH_SOCK" ]]; then
+        eval "$(ssh-agent -s)"
+    fi
+    
+    # Add existing keys
+    if [[ -f ~/.ssh/id_ed25519 ]]; then
+        ssh-add ~/.ssh/id_ed25519
+        print_status "Using existing Ed25519 key"
+    elif [[ -f ~/.ssh/id_rsa ]]; then
+        ssh-add ~/.ssh/id_rsa
+        print_status "Using existing RSA key"
+    fi
+    
+    # Test connection
+    print_status "Testing GitHub connection..."
+    if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+        print_success "GitHub SSH authentication successful!"
+    else
+        print_warning "GitHub SSH test failed. The key might not be added to GitHub yet."
+    fi
+}
+
 # Main installation function
 main() {
     print_status "Starting cross-platform dotfiles setup..."
@@ -336,6 +501,7 @@ main() {
     install_packages
     install_fish
     configure_git
+    setup_github_auth
     
     print_success "Initial setup complete!"
     print_status "Fish plugins will be installed automatically by chezmoi"
