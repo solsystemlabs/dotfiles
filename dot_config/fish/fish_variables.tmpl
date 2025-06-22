@@ -23,9 +23,9 @@ SETUVAR --export EZA_STANDARD_OPTIONS:\x2d\x2dgroup\x1e\x2d\x2dheader\x1e\x2d\x2
 SETUVAR VIRTUAL_ENV_DISABLE_PROMPT:true
 SETUVAR ZO_CMD:zo
 SETUVAR Z_CMD:z
-SETUVAR Z_DATA:/Users/tayloreernisse/\x2elocal/share/z/data
-SETUVAR Z_DATA_DIR:/Users/tayloreernisse/\x2elocal/share/z
-SETUVAR Z_EXCLUDE:\x5e/Users/tayloreernisse\x24
+SETUVAR Z_DATA:{{ .chezmoi.homeDir }}/\x2elocal/share/z/data
+SETUVAR Z_DATA_DIR:{{ .chezmoi.homeDir }}/\x2elocal/share/z
+SETUVAR Z_EXCLUDE:\x5e{{ .chezmoi.homeDir }}\x24
 SETUVAR --export __FISH_EZA_ALIASES:l\x1ela\x1eld\x1eli\x1elid\x1elaa\x1elad\x1elai\x1elaid\x1elaad\x1elaai\x1elaaid\x1ell\x1ella\x1elld\x1elli\x1ellid\x1ellaa\x1ellad\x1ellai\x1ellaid\x1ellaad\x1ellaai\x1ellaaid\x1elg\x1elga\x1elgd\x1elgi\x1elgid\x1elgaa\x1elgad\x1elgai\x1elgaid\x1elgaad\x1elgaai\x1elgaaid\x1ele\x1elea\x1eled\x1elei\x1eleid\x1eleaa\x1elead\x1eleai\x1eleaid\x1eleaad\x1eleaai\x1eleaaid\x1elt\x1elta\x1eltd\x1elti\x1eltid\x1eltad\x1eltai\x1eltaid\x1eltaad\x1eltaai\x1eltaaid\x1elc\x1elca\x1elcd\x1elci\x1elcid\x1elcaa\x1elcad\x1elcai\x1elcaid\x1elcaad\x1elcaai\x1elcaaid\x1elo\x1eloa\x1elod\x1eloi\x1eloid\x1eloaa\x1eload\x1eloai\x1eloaid\x1eloaad\x1eloaai\x1eloaaid
 SETUVAR --export __FISH_EZA_BASE_ALIASES:l\x1ell\x1elg\x1ele\x1elt\x1elc\x1elo
 SETUVAR --export __FISH_EZA_EXPANDED:a\x1ed\x1ei\x1eid\x1eaa\x1ead\x1eai\x1eaid\x1eaad\x1eaai\x1eaaid
@@ -269,7 +269,7 @@ SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR fish_user_paths:/Users/tayloreernisse/go/bin\x1e/Users/tayloreernisse/\x2ecargo/bin\x1e/sbin\x1e/usr/sbin\x1e/bin\x1e/usr/bin\x1e/usr/local/bin\x1e/opt/homebrew/sbin\x1e/Users/tayloreernisse/\x2elocal/bin\x1e/Users/tayloreernisse/tectonic\x1e/Users/tayloreernisse/\x2elocal/share/nvm/v22\x2e13\x2e0/bin\x1e/Users/tayloreernisse/PycharmProjects/python\x2dcode/\x2evenv/bin\x1e/Users/tayloreernisse/\x2envm/versions/node/v18\x2e20\x2e4/bin\x1e/Users/tayloreernisse/\x2envm/versions/node/v22\x2e13\x2e0/bin\x1e/opt/homebrew/bin
+SETUVAR fish_user_paths:{{ .chezmoi.homeDir }}/go/bin\x1e{{ .chezmoi.homeDir }}/\x2ecargo/bin\x1e/sbin\x1e/usr/sbin\x1e/bin\x1e/usr/bin\x1e/usr/local/bin\x1e/opt/homebrew/sbin\x1e{{ .chezmoi.homeDir }}/\x2elocal/bin\x1e{{ .chezmoi.homeDir }}/tectonic\x1e{{ .chezmoi.homeDir }}/\x2elocal/share/nvm/v22\x2e13\x2e0/bin\x1e{{ .chezmoi.homeDir }}/PycharmProjects/python\x2dcode/\x2evenv/bin\x1e{{ .chezmoi.homeDir }}/\x2envm/versions/node/v18\x2e20\x2e4/bin\x1e{{ .chezmoi.homeDir }}/\x2envm/versions/node/v22\x2e13\x2e0/bin\x1e/opt/homebrew/bin
 SETUVAR nvm_default_version:v22\x2e13\x2e0
 SETUVAR tide_aws_bg_color:FF9900
 SETUVAR tide_aws_color:232F3E
