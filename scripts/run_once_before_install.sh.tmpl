@@ -298,6 +298,29 @@ install_fish() {
     print_success "Fish shell setup complete"
 }
 
+# Install atuin shell history sync
+install_atuin() {
+    if command -v atuin &> /dev/null; then
+        print_status "Atuin already installed"
+        return 0
+    fi
+    
+    print_status "Installing atuin shell history sync..."
+    
+    # Install atuin using their official installer
+    if curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh; then
+        print_success "Atuin installed successfully"
+        
+        # Add to PATH for current session
+        export PATH="$HOME/.atuin/bin:$PATH"
+        
+        print_status "Atuin will be configured automatically in your Fish shell"
+    else
+        print_error "Failed to install atuin"
+        return 1
+    fi
+}
+
 # Configure Git (basic setup)
 configure_git() {
     if command -v git &> /dev/null; then
@@ -500,6 +523,7 @@ main() {
     install_system_packages
     install_packages
     install_fish
+    install_atuin
     configure_git
     setup_github_auth
     
