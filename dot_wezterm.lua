@@ -43,8 +43,8 @@ config.keys = {
 config.enable_tab_bar = false
 -- config.use_fancy_tab_bar = false
 -- config.tab_bar_at_bottom = true
-config.window_background_opacity = 0.85
-config.macos_window_background_blur = 80
+-- config.window_background_opacity = 0.85
+-- config.macos_window_background_blur = 80
 
 -- and finally, return the configuration to wezterm
 return config
