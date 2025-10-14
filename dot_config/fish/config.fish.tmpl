@@ -89,7 +89,12 @@ if status is-interactive
 
     # Initialize tools that require it
     if type -q atuin
-        atuin init fish | source
+        atuin init fish --disable-up-arrow | source
+        # Manually bind up arrow with modern fish 4.0+ syntax
+        bind \eOA _atuin_bind_up
+        bind \e\[A _atuin_bind_up
+        bind -M insert \eOA _atuin_bind_up
+        bind -M insert \e\[A _atuin_bind_up
     end
     
     if type -q zoxide
